@@ -4,21 +4,17 @@
       <h3>{{lyricsData.title}}</h3>
       <h4>{{lyricsData.artist}}</h4>
     </div>
-
+    
     <div class="line" v-for="(line, index) in lyricsData.slyrics" v-bind:key="index">
-      <template v-for="(word, windex) in line">
-        <span
-          :key="windex"
-          @click="focusWord(word, index)"
-          class="word"
-          :class="[{highlight: word.focus}]"
-          v-if="validJapStr(word.sf)"
-        >{{ word.sf }}</span>
-        
-        <span :key="windex" v-else>{{word.sf}}</span>
-      </template>
+      <span
+        v-for="(word, windex) in line"
+        :key="windex"
+        @click="focusWord(word, index)"
+        class="word"
+        :class="[{highlight: word.focus}]"
+      >{{ word.sf }}</span>
 
-      <br v-if="line.length === 0">
+      <br v-if="line.length === 0" />
 
       <DictPanel v-if="index === focusLine" :word="highlightWord" @removePanel="removePanel"/>
     </div>
@@ -44,7 +40,7 @@ export default {
         slyrics: []
       },
       focusLine: undefined,
-      highlightWord: ""
+      highlightWord: '',
     };
   },
   created() {
@@ -63,10 +59,10 @@ export default {
       });
 
       this.$set(word, "focus", true);
-      this.highlightWord = word.sf;
+      this.highlightWord =  word.sf;
       this.focusLine = lineNum;
     },
-    removePanel() {
+    removePanel(){
       this.lyricsData.slyrics.forEach(line => {
         line.forEach(word => {
           delete word.focus;
@@ -74,12 +70,7 @@ export default {
       });
 
       this.focusLine = undefined;
-      this.highlightWord = "";
-    },
-    validJapStr(word) {
-      const englishAndSpecialChars = /[\(\)A-Za-z .?!'"？！―　“”「」]/;
-      const result = word.match(englishAndSpecialChars);
-      return result === null;
+      this.highlightWord = '';
     }
   }
 };
