@@ -29,19 +29,19 @@ $tColor: #eaf1e7;
         background-color: $bgColor;
 
         .line{
-            margin: 10px 0;
+            margin: 5px 0;
         }
 
         .word {
             border-bottom: 1px dotted #000;
-            margin: 0 2px;
+            margin: 0 1px;
             cursor: default;
         }
 
         .word:hover {
             border-bottom: 1px solid #000;
         }
-
+        
         .highlight {
             // background-color: yellowgreen;
             border: 1px solid;
@@ -184,6 +184,30 @@ $tColor: #eaf1e7;
 .pbutton-primary {
     background-color: #008CBA;
     color: #ffffff;
+}
+
+.pbutton-success {
+    background-color: #28a745;
+}
+
+.pform{
+    label{
+        display: inline-block;
+        min-width: 55px;
+        font-size: 13pt;
+        vertical-align: top;
+    }
+
+    input, textarea {
+        font-size: 12pt;
+        width: 270px;
+        padding: 5px;
+        margin-right: 5px;
+    }
+
+    .form-row{
+        margin: 5px 0;
+    }
 }
 
 .result-item {

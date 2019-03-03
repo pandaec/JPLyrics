@@ -1,44 +1,42 @@
 <template>
-  <div class="pure-g center">
-    <div class="pure-u-7-8">
-      <form class="pure-form pure-form-aligned">
+  <div class="center">
+    <div>
+      <form class="pform">
         <fieldset>
           <legend>Lyrics Form</legend>
-          <div class="pure-control-group">
+          <div class="form-row">
             <label for="title">Title</label>
             <input
               v-model="title"
               id="title"
-              class="pure-input-1-2"
               type="text"
               placeholder="Title"
             >
-            <button class="pure-button button-success" @click.stop.prevent="searchImportLyrics()" >
+            <button class="pbutton pbutton-success" @click.stop.prevent="searchImportLyrics()" >
               <i class="fas fa-plus-circle white-icon"></i>
             </button>
           </div>
 
           <ImportLyricsPanel v-if="importTitle" :title="importTitle" @importLyrics="importLyrics" />
 
-          <div class="pure-control-group">
+          <div class="form-row">
             <label for="artist">Artist</label>
             <input
               v-model="artist"
               id="artist"
-              class="pure-input-1-2"
               type="text"
               placeholder="Artist"
             >
           </div>
-          <div class="pure-control-group">
+          <div class="form-row">
             <label for="lyrics">Lyrics</label>
-            <textarea v-model="lyrics" id="lyrics" class="pure-input-2-3" rows="30"></textarea>
+            <textarea v-model="lyrics" id="lyrics" rows="30"></textarea>
           </div>
-          <div class="pure-controls">
+          <div class="form-row">
             <button
               @click.stop.prevent="submit()"
               type="submit"
-              class="pure-button pure-button-primary"
+              class="pbutton pbutton-primary"
             >Submit</button>
           </div>
         </fieldset>
