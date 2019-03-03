@@ -77,7 +77,7 @@ export default {
       this.highlightWord = "";
     },
     validJapStr(word) {
-      const englishAndSpecialChars = /[\(\)A-Za-z .?!'"？！―　“”「」]/;
+      const englishAndSpecialChars = /[\(\)A-Za-z .?!'"？！―　“”「」─]/;
       const result = word.match(englishAndSpecialChars);
       return result === null;
     }
