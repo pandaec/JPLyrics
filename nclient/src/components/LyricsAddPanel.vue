@@ -6,27 +6,17 @@
           <legend>Lyrics Form</legend>
           <div class="form-row">
             <label for="title">Title</label>
-            <input
-              v-model="title"
-              id="title"
-              type="text"
-              placeholder="Title"
-            >
-            <button class="pbutton pbutton-success" @click.stop.prevent="searchImportLyrics()" >
+            <input v-model="title" id="title" type="text" placeholder="Title">
+            <button class="pbutton pbutton-success" @click.stop.prevent="searchImportLyrics()">
               <i class="fas fa-plus-circle white-icon"></i>
             </button>
           </div>
 
-          <ImportLyricsPanel v-if="importTitle" :title="importTitle" @importLyrics="importLyrics" />
+          <ImportLyricsPanel v-if="importTitle" :title="importTitle" @importLyrics="importLyrics"/>
 
           <div class="form-row">
             <label for="artist">Artist</label>
-            <input
-              v-model="artist"
-              id="artist"
-              type="text"
-              placeholder="Artist"
-            >
+            <input v-model="artist" id="artist" type="text" placeholder="Artist">
           </div>
           <div class="form-row">
             <label for="lyrics">Lyrics</label>
@@ -47,7 +37,7 @@
 
 
 <script>
-import ImportLyricsPanel from '@/components/ImportLyricsPanel.vue';
+import ImportLyricsPanel from "@/components/ImportLyricsPanel.vue";
 export default {
   name: "SearchPanel",
   components: {
@@ -58,14 +48,11 @@ export default {
       title: "",
       artist: "",
       lyrics: "",
-      importTitle: "",
+      importTitle: ""
     };
   },
   methods: {
     submit: function() {
-      console.log(this.title);
-      console.log(this.artist);
-      console.log(this.lyrics.split("\n"));
       if (this.title === "" || this.artist === "" || this.lyrics === "") {
         return;
       }
@@ -90,14 +77,17 @@ export default {
         })
         .catch(console.log);
     },
-    searchImportLyrics: function(){
+    searchImportLyrics: function() {
       this.importTitle = this.title;
     },
-    importLyrics: function(sr){
+    importLyrics: function(sr) {
       this.title = sr.title;
       this.artist = sr.artist;
-      this.lyrics = sr.content.join('\n');
-    },
+      this.lyrics = sr.content.join("\n");
+
+      // close the import panel
+      this.importTitle = "";
+    }
   }
 };
 </script>
