@@ -52,7 +52,7 @@ export default {
     },
     
     updateLyrics: function(){
-      const basePath = `http://localhost:8080/api/lyrics/search`;
+      const basePath = `http://192.168.1.197:8080/api/lyrics/search`;
       const fetchPath =
         basePath + (this.q ? `?q=${encodeURIComponent(this.q)}` : ``);
       fetch(fetchPath)
