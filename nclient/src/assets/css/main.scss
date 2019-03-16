@@ -2,6 +2,7 @@
 
 // good bg color
 $bgColor: #eaf1e7;
+
 // $bgColor: #d1bc5f;
 $textColor: #343330;
 $tColor: #fffae4;
@@ -106,10 +107,6 @@ $tColor: #fffae4;
     justify-content: center;
 }
 
-.form-center {
-    text-align: center;
-}
-
 .sidebar {
     background-color: #1c1c1c;
     color: #ffffff;
@@ -150,10 +147,10 @@ $tColor: #fffae4;
 
 .frontpage-form {
     height: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
 
     fieldset {
         width: 100%;
@@ -205,17 +202,21 @@ $tColor: #fffae4;
         margin-right: 5px;
     }
 
+    textarea{
+        width: 350px;
+    }
+
     .form-row{
         margin: 5px 0;
     }
 }
 
-.result-item {
-    padding-left: 5px;
+.result-item:nth-child(odd){
+    background-color: #fff;
 }
 
-.result-item:hover {
-    background-color: #fff;
+.result-item:hover{
+    cursor: pointer;
 }
 
 .lyrics-info{

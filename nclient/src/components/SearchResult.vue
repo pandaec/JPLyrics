@@ -2,15 +2,14 @@
   <div>
     <SearchPanel :prevQ="q"/>
 
-    <div v-for="item in lyricsData" :key="item.sid" @click="getLyrics(item.sid)">
-      <div class="result-item">
+    <div v-for="item in lyricsData" :key="item.sid" class="result-item" @click="getLyrics(item.sid)">
+
         <h3>{{item.title}}</h3>
         <h5>{{item.artist}} ({{item.sid}})</h5>
         <template v-for="line in item.slyrics">
           <span>{{line}}</span>
           <br>
         </template>
-      </div>
 
       <hr>
     </div>
@@ -52,7 +51,7 @@ export default {
     },
     
     updateLyrics: function(){
-      const basePath = `http://192.168.1.197:8080/api/lyrics/search`;
+      const basePath = `${process.env.VUE_APP_DB_IP}/api/lyrics/search`;
       const fetchPath =
         basePath + (this.q ? `?q=${encodeURIComponent(this.q)}` : ``);
       fetch(fetchPath)

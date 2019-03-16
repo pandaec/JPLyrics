@@ -79,7 +79,7 @@ export default {
       this.$emit("removePanel");
     },
     searchWord() {
-      fetch(`http://192.168.1.197:8080/api/jisho?keyword=${this.word}`)
+      fetch(`${process.env.VUE_APP_DB_IP}/api/jisho?keyword=${this.word}`)
         .then(res => res.json())
         .then(res => {
           this.meaning.japanese = res[0].japanese;

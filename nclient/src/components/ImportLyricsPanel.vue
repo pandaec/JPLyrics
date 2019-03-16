@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     searchLyricsOnline: function(title) {
-      fetch(`http://192.168.1.197:8080/api/fetch/search/${title}`)
+      fetch(`${process.env.VUE_APP_DB_IP}/api/fetch/search/${title}`)
         .then(res => res.json())
         .then(res => {
           this.searchResult = res;
@@ -38,7 +38,7 @@ export default {
 
     importLyrics: function(searchObj) {
       fetch(
-        `http://192.168.1.197:8080/api/fetch/lyrics?aid=${encodeURIComponent(
+        `${process.env.VUE_APP_DB_IP}/api/fetch/lyrics?aid=${encodeURIComponent(
           searchObj.aid
         )}&lid=${encodeURIComponent(searchObj.lid)}`
       )

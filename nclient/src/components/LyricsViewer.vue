@@ -48,7 +48,7 @@ export default {
     };
   },
   created() {
-    fetch(`http://192.168.1.197:8080/api/lyrics/${this.sid}`)
+    fetch(`${process.env.VUE_APP_DB_IP}/api/lyrics/${this.sid}`)
       .then(res => res.json())
       .then(result => {
         this.lyricsData = result;
@@ -77,7 +77,7 @@ export default {
       this.highlightWord = "";
     },
     validJapStr(word) {
-      const englishAndSpecialChars = /[\(\)A-Za-z .?!'"？！―　“”「」─0-9]/;
+      const englishAndSpecialChars = /[\(\)A-Za-z .?!'"？！―　“”「」…─0-9]/;
       const result = word.match(englishAndSpecialChars);
       return result === null;
     }

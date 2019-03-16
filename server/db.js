@@ -144,9 +144,9 @@ var DB = /** @class */ (function () {
         });
     };
     DB.config = {
-        database: 'lf3',
-        user: 'postgres',
-        password: '34161652',
+        database: process.env.DB_NAME,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASS,
     };
     return DB;
 }());

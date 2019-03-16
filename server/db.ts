@@ -5,9 +5,9 @@ import {DBError, ILyrics}  from "./typings/lyrics";
 export class DB {
     private static db: DB;
     private static config = {
-        database: 'lf3',
-        user: 'postgres',
-        password: '34161652',
+        database: process.env.DB_NAME,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASS,
     };
     private pool: Pool;
 

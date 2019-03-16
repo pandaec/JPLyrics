@@ -1,13 +1,14 @@
 <template>
-  <!-- <form class="form-center frontpage-form"> -->
-  <form class="form-center frontpage-form">
-    <fieldset>
-      <input type="text" name="q" v-model="q">
-      <button class="pbutton pbutton-primary" type="submit" @click.stop.prevent="submit()">
-        <i class="fas fa-search"></i> Search
-      </button>
-    </fieldset>
-  </form>
+  <div class="frontpage-form">
+    <form>
+      <fieldset>
+        <input type="text" name="q" v-model="q">
+        <button class="pbutton pbutton-primary" type="submit" @click.stop.prevent="submit()">
+          <i class="fas fa-search"></i> Search
+        </button>
+      </fieldset>
+    </form>
+  </div>
 </template>
 
 

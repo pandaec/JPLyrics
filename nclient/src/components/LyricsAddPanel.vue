@@ -63,7 +63,7 @@ export default {
         slyrics: this.lyrics.split("\n")
       };
 
-      fetch("http://192.168.1.197:8080/api/lyrics", {
+      fetch("${process.env.VUE_APP_DB_IP}/api/lyrics", {
         method: "POST",
         body: JSON.stringify(lyricsData),
         headers: {
