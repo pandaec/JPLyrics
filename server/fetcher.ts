@@ -48,7 +48,13 @@ const JLyrics = {
 
             if (lyricsSelector == null) return;
 
-            return lyricsSelector.html().split('<br>').map(he.decode);
+            let result : string[] = lyricsSelector.html().split('<br>').map(he.decode);
+            if(result.length > 0){
+                if(result[result.length - 1].trim() === ''){
+                    result.pop();
+                }
+            }
+            return result;
         } catch (error) {
             console.log(error);
         }

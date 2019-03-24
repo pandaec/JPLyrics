@@ -88,7 +88,7 @@ var JLyrics = {
     },
     getLyrics: function (aid, lid) {
         return __awaiter(this, void 0, void 0, function () {
-            var lyricsUri, options, $, lyricsSelector, error_2;
+            var lyricsUri, options, $, lyricsSelector, result, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -106,7 +106,13 @@ var JLyrics = {
                         lyricsSelector = $('#Lyric');
                         if (lyricsSelector == null)
                             return [2 /*return*/];
-                        return [2 /*return*/, lyricsSelector.html().split('<br>').map(he.decode)];
+                        result = lyricsSelector.html().split('<br>').map(he.decode);
+                        if (result.length > 0) {
+                            if (result[result.length - 1].trim() === '') {
+                                result.pop();
+                            }
+                        }
+                        return [2 /*return*/, result];
                     case 3:
                         error_2 = _a.sent();
                         console.log(error_2);

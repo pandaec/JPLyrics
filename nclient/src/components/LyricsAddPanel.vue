@@ -60,7 +60,7 @@ export default {
       const lyricsData = {
         title: this.title,
         artist: this.artist,
-        slyrics: this.lyrics.split("\n")
+        slyrics: this.lyrics.trim().split("\n")
       };
 
       fetch(`${process.env.VUE_APP_DB_IP}/api/lyrics`, {
