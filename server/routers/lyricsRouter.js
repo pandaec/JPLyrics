@@ -70,19 +70,11 @@ router.get('/search', (asyncErrorHandle_1.default(function (req, res, next) { re
                 _a.label = 4;
             case 4:
                 result = searchResults.map(function (sr) {
-                    var previewMaxLength = 3;
-                    var si = sr.slyrics.indexOf('');
-                    if (si < 0) {
-                        si = previewMaxLength;
-                    }
-                    else {
-                        si = Math.min(si, previewMaxLength);
-                    }
                     return {
                         sid: sr.sid,
                         title: sr.title,
                         artist: sr.artist,
-                        slyrics: sr.slyrics.slice(0, si),
+                        slyrics: sr.slyrics.filter(function (s) { return s.length > 0; }).slice(0, 3),
                     };
                 });
                 res.json(result);

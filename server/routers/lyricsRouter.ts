@@ -18,19 +18,11 @@ router.get('/search', (asyncErrorHandle(async (req, res, next) => {
         }
 
         const result = searchResults.map(sr => {
-            const previewMaxLength: number = 3;
-            let si: number =sr.slyrics.indexOf('');
-            if(si < 0){
-                si = previewMaxLength;
-            }else{
-                si = Math.min(si, previewMaxLength);
-            }
-
             return {
                 sid: sr.sid,
                 title: sr.title,
                 artist: sr.artist,
-                slyrics: sr.slyrics.slice(0, si),
+                slyrics: sr.slyrics.filter(s => s.length>0).slice(0, 3),
             };
         })
         res.json(result);
