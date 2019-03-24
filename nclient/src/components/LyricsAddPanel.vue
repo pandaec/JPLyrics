@@ -1,5 +1,5 @@
 <template>
-  <div class="center">
+  <div class="content center">
     <div>
       <form class="pform">
         <fieldset>

@@ -29,7 +29,7 @@ $tColor: #fffae4;
         margin: 0 auto;
         background-color: $bgColor;
 
-        .line{
+        .line {
             margin: 5px 0;
         }
 
@@ -42,7 +42,7 @@ $tColor: #fffae4;
         .word:hover {
             border-bottom: 1px solid #000;
         }
-        
+
         .highlight {
             // background-color: yellowgreen;
             border: 1px solid;
@@ -137,17 +137,21 @@ $tColor: #fffae4;
     padding: 5px 0;
 }
 
-.search-result:nth-child(even){
+.search-result:nth-child(even) {
     background-color: #fff;
 }
 
 .main-content {
     flex: 1;
+    display: flex;
+
+    .content {
+        flex-grow: 1;
+    }
+
 }
 
 .frontpage-form {
-    height: 100%;
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -187,38 +191,39 @@ $tColor: #fffae4;
     background-color: #28a745;
 }
 
-.pform{
-    label{
+.pform {
+    label {
         display: inline-block;
         min-width: 55px;
         font-size: 13pt;
         vertical-align: top;
     }
 
-    input, textarea {
+    input,
+    textarea {
         font-size: 12pt;
         width: 270px;
         padding: 5px;
         margin-right: 5px;
     }
 
-    textarea{
+    textarea {
         width: 350px;
     }
 
-    .form-row{
+    .form-row {
         margin: 5px 0;
     }
 }
 
-.result-item:nth-child(odd){
+.result-item:nth-child(odd) {
     background-color: #fff;
 }
 
-.result-item:hover{
+.result-item:hover {
     cursor: pointer;
 }
 
-.lyrics-info{
+.lyrics-info {
     margin-left: 3px;
 }

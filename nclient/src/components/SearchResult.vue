@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="content">
     <SearchPanel :prevQ="q"/>
 
     <div v-for="item in lyricsData" :key="item.sid" class="result-item" @click="getLyrics(item.sid)">
