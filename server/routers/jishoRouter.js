@@ -72,9 +72,22 @@ router.get('/', asyncErrorHandle_1.default(function (req, res, next) { return __
                         .send('Invalid request');
                     return [2 /*return*/];
                 }
-                res.json(result.data);
+                res.json(formatResult(result.data));
                 return [2 /*return*/];
         }
     });
 }); }));
+function formatResult(jresult) {
+    return jresult.map(function (r) {
+        return {
+            japanese: r['japanese'],
+            senses: r['senses'].map(function (entry) {
+                return {
+                    definition: entry["english_definitions"],
+                    pos: entry["parts_of_speech"]
+                };
+            })
+        };
+    });
+}
 exports.default = router;

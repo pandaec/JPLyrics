@@ -4,7 +4,7 @@
 <template>
   <div id="app">
     <div class="sidebar">
-      <h3>P-Lyrics</h3>
+      <h3 class="header">P-Lyrics</h3>
 
       <ul>
         <a>

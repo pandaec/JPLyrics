@@ -1,16 +1,18 @@
 // https://coolors.co/fffae4-343330-bacdb0-729b79-475b63
+// https://coolors.co/05668d-427aa1-ebf2fa-679436-a5be00
+$bgColor: #ebf2fa;
+$b1Color: #05668d;
+$b2Color: #427aa1;
+$g1Color: #679436;
+$g2Color: #a5be00;
 
-// good bg color
-$bgColor: #eaf1e7;
-
-// $bgColor: #d1bc5f;
 $textColor: #343330;
-$tColor: #fffae4;
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: 0.2s;
 }
 
 #app {
@@ -25,7 +27,7 @@ $tColor: #fffae4;
 
 
     .container {
-        max-width: 650px;
+        width: 800px;
         margin: 0 auto;
         background-color: $bgColor;
 
@@ -34,18 +36,17 @@ $tColor: #fffae4;
         }
 
         .word {
-            border-bottom: 1px dotted #000;
+            border-bottom: 1px dotted $textColor;
             margin: 0 1px;
             cursor: default;
         }
 
-        .word:hover {
-            border-bottom: 1px solid #000;
+        .word:hover:not(.highlight) {
+            border-bottom: 1px solid $textColor;
         }
 
         .highlight {
-            // background-color: yellowgreen;
-            border: 1px solid;
+            border: 2px dashed $b1Color;
         }
 
         ul {
@@ -56,8 +57,36 @@ $tColor: #fffae4;
         .lineBlock {
             display: block;
             width: 100%;
-            border: 1px solid;
+            border: 2px solid $b1Color;
             background-color: $bgColor;
+        }
+
+        .dictContainer {
+            display: flex;
+            flex-direction: row;
+            color: $textColor;
+        }
+
+        .dictContent {
+            flex-grow: 1;
+            padding-left: 5px;
+
+        }
+
+        .dictPagingBtn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border: none;
+            background-color: $b2Color;
+            color: $bgColor;
+            padding: 0 10px;
+        }
+
+        .dictPaging {
+            background-color: $bgColor;
+            display: inline-block;
         }
 
         .arrow-up {
@@ -66,7 +95,7 @@ $tColor: #fffae4;
             border-left: 5px solid transparent;
             border-right: 5px solid transparent;
 
-            border-bottom: 5px solid #000;
+            border-bottom: 5px solid $b1Color;
             position: relative;
         }
     }
@@ -108,21 +137,24 @@ $tColor: #fffae4;
 }
 
 .sidebar {
-    background-color: #1c1c1c;
-    color: #ffffff;
+    background-color: $b2Color;
+    color: $bgColor;
+
+    .header {
+        background-color: $b1Color;
+    }
+
+    .nav-link{
+        cursor: pointer;
+    }
 
     .nav-link:hover {
-        background-color: #777777;
+        background-color: $b1Color;
     }
 }
 
-.button-success {
-    background: rgb(28, 184, 65);
-    /* this is a green */
-}
-
 .white-icon {
-    color: #fff;
+    color: $bgColor;
 }
 
 .form-expand {
@@ -183,12 +215,12 @@ $tColor: #fffae4;
 }
 
 .pbutton-primary {
-    background-color: #008CBA;
-    color: #ffffff;
+    background-color: $b1Color;
+    color: $bgColor;
 }
 
 .pbutton-success {
-    background-color: #28a745;
+    background-color: $g1Color;
 }
 
 .pform {
@@ -216,14 +248,47 @@ $tColor: #fffae4;
     }
 }
 
-.result-item:nth-child(odd) {
-    background-color: #fff;
+label.pinput {
+    display: inline-block;
+    padding: 0.2em 0.3em;
+    margin: 0.2em;
+    cursor: pointer;
+    color: $bgColor;
+    background: $g2Color;
+    font-weight: bold;
+
+    transition: 0.3s;
+    user-select: none;
 }
 
-.result-item:hover {
+input:checked + label.pinput{
+    background-color: $g1Color;
+    color: $bgColor;
+}
+
+
+
+.result-item:nth-child(odd) {
+    background-color: $bgColor;
+}
+
+.result-item {
+    background-color: #fff;
     cursor: pointer;
 }
 
 .lyrics-info {
     margin-left: 3px;
+}
+
+rt {
+    font-size: 12px;
+}
+
+rb {
+    font-size: 16px;
+}
+
+.hidden {
+    display: none;
 }

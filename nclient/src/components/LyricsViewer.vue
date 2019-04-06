@@ -3,19 +3,19 @@
     <div class="lyrics-info">
       <h3>{{lyricsData.title}}</h3>
       <h4>{{lyricsData.artist}}</h4>
+      <LyricsViewerReadingToggleBtn @updateReadingMode="updateReadingMode"/>
     </div>
 
     <div class="line" v-for="(line, index) in lyricsData.slyrics" v-bind:key="index">
       <template v-for="(word, windex) in line">
-        <span
+        <Word
           :key="windex"
-          @click="focusWord(word, index)"
-          class="word"
-          :class="[{highlight: word.focus}]"
-          v-if="validJapStr(word.sf)"
-        >{{ word.sf }}</span>
-        
-        <span :key="windex" v-else>{{word.sf}}</span>
+          @selectWord="focusWord"
+          :wordObj="word"
+          :focus="word.focus"
+          :readingMode="readingMode"
+          :lineNum="index"
+        />
       </template>
 
       <br v-if="line.length === 0">
@@ -27,11 +27,15 @@
 
 <script>
 import DictPanel from "./DictPanel.vue";
+import Word from "./Word.vue";
+import LyricsViewerReadingToggleBtn from "./LyricsViewerReadingToggleBtn.vue";
 
 export default {
   name: "LyricsViewer",
   components: {
-    DictPanel
+    DictPanel,
+    Word,
+    LyricsViewerReadingToggleBtn
   },
   props: {
     sid: String
@@ -44,7 +48,8 @@ export default {
         slyrics: []
       },
       focusLine: undefined,
-      highlightWord: ""
+      highlightWord: "",
+      readingMode: "hiragana",
     };
   },
   created() {
@@ -76,10 +81,8 @@ export default {
       this.focusLine = undefined;
       this.highlightWord = "";
     },
-    validJapStr(word) {
-      const englishAndSpecialChars = /[\(\)A-Za-z .?!'"？！―　“”「」…─0-9]/;
-      const result = word.match(englishAndSpecialChars);
-      return result === null;
+    updateReadingMode(targetMode) {
+      this.readingMode = targetMode;
     }
   }
 };

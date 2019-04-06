@@ -2,20 +2,36 @@
   <div class="dictBlock">
     <div class="arrow-up" :style="{left: arrowLeft+'px'}"></div>
     <div class="lineBlock">
-      <div
-        style="width:100%;float:right;text-align:right;border-bottom:1px solid;"
-        @click="removePanel"
-      >X</div>
-      <div>
-        <div v-if="meaning.japanese[0].word">
-          {{meaning.japanese[0].word}} ({{meaning.japanese[0].reading}})
+      <!-- <div class="dictBar" @click="removePanel">
+        <i class="fas fa-window-close"></i>
+      </div> -->
+      <div class="dictContainer">
+        <button class="dictPagingBtn" @click="updateWordIndex(-1)">
+          <i class="fas fa-angle-left"></i>
+        </button>
+        <div class="dictContent">
+          <span style="float: right;">{{this.wordIndex+1}}/{{this.meanings.length}}</span>
+          <div
+            v-if="meanings[this.wordIndex].japanese[0].word"
+          >{{meanings[this.wordIndex].japanese[0].word}} ({{getReadingStr(meanings[this.wordIndex].japanese)}})</div>
+          <div v-else>{{meanings[this.wordIndex].japanese[0].reading}}</div>
+
+          <!-- <div class="dictPaging">
+            <button class="pbutton pbutton-primary" @click="updateWordIndex(-1)"><i class="fas fa-angle-left"></i></button>
+            <span>{{this.wordIndex+1}}/{{this.meanings.length}}</span>
+            <button class="pbutton pbutton-primary" @click="updateWordIndex(1)"><i class="fas fa-angle-right"></i></button>
+          </div>-->
+
+          <ul>
+            <li
+              v-for="(sense, si) in meanings[this.wordIndex].senses"
+              :key="si"
+            >{{getDefinitionStr(sense.definition)}}</li>
+          </ul>
         </div>
-        <div v-else>
-          {{meaning.japanese[0].reading}}
-        </div>
-        <ul>
-          <li v-for="(sense, si) in meaning.senses" :key="si">{{sense.definition}}</li>
-        </ul>
+        <button class="dictPagingBtn" @click="updateWordIndex(1)">
+          <i class="fas fa-angle-right"></i>
+        </button>
       </div>
     </div>
   </div>
@@ -25,34 +41,37 @@
 <script>
 export default {
   name: "DictPanel",
-  props: ["word"],
+  props: {
+    word: String
+  },
   data: function() {
     return {
       arrowLeft: this.calcArrowOffset(),
-      meaning: {
-        japanese: [
-          {
-            word: "",
-            reading: ""
-          }
-        ],
-        senses: [
-          {
-            definition: "",
-            pos: ""
-          }
-        ]
-      }
+      meanings: [
+        {
+          japanese: [
+            {
+              word: "",
+              reading: ""
+            }
+          ],
+          senses: [
+            {
+              definition: [],
+              pos: []
+            }
+          ]
+        }
+      ],
+      wordIndex: 0
     };
   },
   computed: {},
   mounted: function() {
-    this.arrowLeft = this.calcArrowOffset();
     this.searchWord();
   },
   watch: {
     word: function(newVal, oldVal) {
-      this.arrowLeft = this.calcArrowOffset();
       this.searchWord();
     }
   },
@@ -62,7 +81,7 @@ export default {
       const highlight = document.querySelector(".highlight");
       const dictBlock = this.$el;
 
-      if (highlight == undefined || dictBlock == undefined) return 500;
+      if (highlight == undefined || dictBlock == undefined) return 9999999;
 
       const highlightRect = highlight.getBoundingClientRect();
       const dictBlkRect = dictBlock.getBoundingClientRect();
@@ -81,16 +100,39 @@ export default {
     searchWord() {
       fetch(`${process.env.VUE_APP_DB_IP}/api/jisho?keyword=${this.word}`)
         .then(res => res.json())
-        .then(res => {
-          this.meaning.japanese = res[0].japanese;
-          this.meaning.senses = res[0].senses.map(entry => {
-            return {
-              definition: entry['english_definitions'],
-              pos: entry['parts_of_speech']
-            }
-          });
-        })
-        .catch();
+        .then(this.searchWordHandle)
+        .catch(console.err);
+    },
+    searchWordHandle(res) {
+      this.meanings = res;
+      this.arrowLeft = this.calcArrowOffset();
+      this.wordIndex = 0;
+    },
+
+    getDefinitionStr(definition) {
+      if (definition !== undefined) {
+        return definition.join(", ");
+      }
+    },
+    updateWordIndex(amount) {
+      this.wordIndex = Math.max(
+        Math.min(this.wordIndex + amount, this.meanings.length - 1),
+        0
+      );
+    },
+    getReadingStr(japanese) {
+      if (japanese === undefined) return;
+
+      const targetWord = japanese[0]["word"];
+      let result = [];
+
+      for (let w of japanese) {
+        if (w.word === targetWord) {
+          result.push(w.reading);
+        }
+      }
+
+      return result.join("/");
     }
   }
 };
