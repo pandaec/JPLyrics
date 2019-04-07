@@ -22,7 +22,7 @@ router.get('/search', (asyncErrorHandle(async (req, res, next) => {
                 sid: sr.sid,
                 title: sr.title,
                 artist: sr.artist,
-                slyrics: sr.slyrics.filter(s => s.length>0).slice(0, 3),
+                slyrics: sr.slyrics.filter(s => s.length > 0).slice(0, 3),
             };
         })
         res.json(result);
@@ -58,8 +58,23 @@ router.post('/', asyncErrorHandle(async (req, res, next) => {
         return;
     }
 
-    const result: QueryResult | DBError = await db.insertLyrics(lyricsObj);
-    res.json((<QueryResult>result).rows[0]);
+    // check if song already exists
+    try {
+        let searchResult: ILyrics[] = await db.selectByExactTitle(lyricsObj.title);
+        if (searchResult.length > 0) {
+            res.json({
+                'err': 'song_duplicate',
+                'sid': searchResult[0].sid
+            });
+            return;
+        }
+
+        const result: QueryResult = await db.insertLyrics(lyricsObj);
+        res.json((<QueryResult>result).rows[0]);
+    } catch (err) {
+        console.log(err);
+    }
+
 }));
 
 async function getTokenizer(): Promise<kuromoji.Tokenizer<kuromoji.IpadicFeatures>> {

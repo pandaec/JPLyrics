@@ -109,7 +109,7 @@ router.get('/:sid', (asyncErrorHandle_1.default(function (req, res, next) { retu
     });
 }); })));
 router.post('/', asyncErrorHandle_1.default(function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-    var lyricsObj, result;
+    var lyricsObj, searchResult, result, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -121,11 +121,29 @@ router.post('/', asyncErrorHandle_1.default(function (req, res, next) { return _
                         .send('Invalid request');
                     return [2 /*return*/];
                 }
-                return [4 /*yield*/, db.insertLyrics(lyricsObj)];
+                _a.label = 1;
             case 1:
+                _a.trys.push([1, 4, , 5]);
+                return [4 /*yield*/, db.selectByExactTitle(lyricsObj.title)];
+            case 2:
+                searchResult = _a.sent();
+                if (searchResult.length > 0) {
+                    res.json({
+                        'err': 'song_duplicate',
+                        'sid': searchResult[0].sid
+                    });
+                    return [2 /*return*/];
+                }
+                return [4 /*yield*/, db.insertLyrics(lyricsObj)];
+            case 3:
                 result = _a.sent();
                 res.json(result.rows[0]);
-                return [2 /*return*/];
+                return [3 /*break*/, 5];
+            case 4:
+                err_2 = _a.sent();
+                console.log(err_2);
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); }));

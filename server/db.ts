@@ -1,5 +1,5 @@
-import {Pool, QueryResult, Query} from 'pg';
-import {DBError, ILyrics}  from "./typings/lyrics";
+import { Pool, QueryResult, Query } from 'pg';
+import { DBError, ILyrics } from "./typings/lyrics";
 
 
 export class DB {
@@ -33,7 +33,7 @@ export class DB {
             return res;
         } catch (err) {
             console.log(err.stack);
-            return {err: 'query failed'};
+            return { err: 'query failed' };
         } finally {
             client.release();
         }
@@ -57,24 +57,33 @@ export class DB {
         return (<QueryResult>res).rows;
     }
 
-    public async selectBySongId(songId: string): Promise<ILyrics>{
+    public async selectByExactTitle(title: string): Promise<ILyrics[]> {
+        const res = await this.query('SELECT * FROM lyrics WHERE title=$1', [title]);
+        if ((<DBError>res).err) {
+            throw <DBError>res;
+        }
+        return (<QueryResult>res).rows;
+    }
+
+    public async selectBySongId(songId: string): Promise<ILyrics> {
         const res = await this.query('SELECT * FROM lyrics WHERE sid=$1', [`${songId}`]);
-        if ((<DBError>res).err){
-            throw <DBError> res;
+        if ((<DBError>res).err) {
+            throw <DBError>res;
         }
 
         return (<QueryResult>res).rows[0];
     }
 
-    public async insertLyrics(lyrics: ILyrics): Promise<QueryResult | DBError> {
+    public async insertLyrics(lyrics: ILyrics): Promise<QueryResult> {
         const text = 'INSERT INTO lyrics (title, artist, slyrics) VALUES ($1, $2, $3) RETURNING sid';
         const params = [lyrics.title, lyrics.artist, lyrics.slyrics];
         const res = await this.query(text, params);
 
         if ((<DBError>res).err) {
-            return <DBError>res;
+            throw <DBError>res;
         }
 
         return (<QueryResult>res);
     }
+
 }

@@ -72,7 +72,22 @@ export default {
       })
         .then(res => res.json())
         .then(res => {
-          const sid = res["sid"];
+          if (res.hasOwnProperty("err")) {
+            switch (res.err) {
+              case "song_duplicate":
+                if (
+                  window.confirm(
+                    "Song already exists in db. Confirm to redirect to that page."
+                  )
+                ) {
+                  this.$router.push(`/lyrics/${res.sid}`);
+                }
+                break;
+              default:
+            }
+            return;
+          }
+          const sid = res.sid;
           this.$router.push(`/lyrics/${sid}`);
         })
         .catch(console.log);

@@ -108,6 +108,22 @@ var DB = /** @class */ (function () {
             });
         });
     };
+    DB.prototype.selectByExactTitle = function (title) {
+        return __awaiter(this, void 0, void 0, function () {
+            var res;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.query('SELECT * FROM lyrics WHERE title=$1', [title])];
+                    case 1:
+                        res = _a.sent();
+                        if (res.err) {
+                            throw res;
+                        }
+                        return [2 /*return*/, res.rows];
+                }
+            });
+        });
+    };
     DB.prototype.selectBySongId = function (songId) {
         return __awaiter(this, void 0, void 0, function () {
             var res;
@@ -136,7 +152,7 @@ var DB = /** @class */ (function () {
                     case 1:
                         res = _a.sent();
                         if (res.err) {
-                            return [2 /*return*/, res];
+                            throw res;
                         }
                         return [2 /*return*/, res];
                 }
