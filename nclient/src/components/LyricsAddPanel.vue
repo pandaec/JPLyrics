@@ -51,6 +51,10 @@ export default {
       importTitle: ""
     };
   },
+  created(){
+    const urlParams = new URLSearchParams(window.location.search);
+    this.title = urlParams.get('t');
+  },
   methods: {
     submit: function() {
       if (this.title === "" || this.artist === "" || this.lyrics === "") {

@@ -16,6 +16,9 @@
 
     <div v-if="lyricsData.length===0">
       <h3>No result</h3>
+      <button class="pbutton pbutton-primary" @click="addLyrics">
+        <span>Add lyrics for this song</span>
+      </button>
     </div>
   </div>
 </template>
@@ -59,7 +62,10 @@ export default {
         .then(result => {
           this.lyricsData = result;
         });
-    }
+    },
+    addLyrics: function(){
+      this.$router.push(`/lyrics/new?t=${this.q}`);
+    },
   }
 };
 </script>
