@@ -4,23 +4,17 @@
     <div class="lineBlock">
       <!-- <div class="dictBar" @click="removePanel">
         <i class="fas fa-window-close"></i>
-      </div> -->
+      </div>-->
       <div class="dictContainer">
         <button class="dictPagingBtn" @click="updateWordIndex(-1)">
           <i class="fas fa-angle-left"></i>
         </button>
-        <div class="dictContent">
+        <div class="dictContent" @touchstart="tstart" @touchmove="tmove" @touchend="tend">
           <span style="float: right;">{{this.wordIndex+1}}/{{this.meanings.length}}</span>
           <div
             v-if="meanings[this.wordIndex].japanese[0].word"
           >{{meanings[this.wordIndex].japanese[0].word}} ({{getReadingStr(meanings[this.wordIndex].japanese)}})</div>
           <div v-else>{{meanings[this.wordIndex].japanese[0].reading}}</div>
-
-          <!-- <div class="dictPaging">
-            <button class="pbutton pbutton-primary" @click="updateWordIndex(-1)"><i class="fas fa-angle-left"></i></button>
-            <span>{{this.wordIndex+1}}/{{this.meanings.length}}</span>
-            <button class="pbutton pbutton-primary" @click="updateWordIndex(1)"><i class="fas fa-angle-right"></i></button>
-          </div>-->
 
           <ul>
             <li
@@ -42,10 +36,11 @@
 export default {
   name: "DictPanel",
   props: {
-    word: String
+    word: String,
   },
   data: function() {
     return {
+      SLIDE_OFFSET: 70,
       arrowLeft: this.calcArrowOffset(),
       meanings: [
         {
@@ -63,7 +58,11 @@ export default {
           ]
         }
       ],
-      wordIndex: 0
+      wordIndex: 0,
+      tx: 0,
+      ty: 0,
+      orix: 0,
+      oriy: 0
     };
   },
   computed: {},
@@ -133,7 +132,27 @@ export default {
       }
 
       return result.join("/");
-    }
+    },
+    tstart(evt) {
+      var t = evt.touches[0];
+      this.orix = t.screenX;
+      this.oriy = t.screenY;
+    },
+    tmove(evt) {
+      evt.preventDefault();
+      var t = evt.touches[0];
+      this.tx = t.screenX;
+      this.ty = t.screenY;
+    },
+    tend(evt) {
+      if (this.tx - this.orix > this.SLIDE_OFFSET) {
+        // right
+        this.updateWordIndex(-1);
+      } else if (this.orix - this.tx > this.SLIDE_OFFSET) {
+        // left
+        this.updateWordIndex(1);
+      }
+    },
   }
 };
 </script>
