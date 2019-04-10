@@ -13,9 +13,12 @@ const jpUtils = {
         return (ch >= "\u30a0" && ch <= "\u30ff");
     },
 
+    isJapanese: function(ch){
+        return this.isHiragana(ch) || this.isKatakana(ch) || this.isKanji(ch);
+    },
+
     hasHiragana: function(sentence){
         if(typeof sentence !== 'string'){
-            console.error("invalid params: sentence must be string");
             return;
         }
         return sentence.split('').some(this.isHiragana);
@@ -23,15 +26,28 @@ const jpUtils = {
 
     hasKanji: function(sentence){
         if(typeof sentence !== 'string'){
-            console.error("invalid params: sentence must be string");
             return;
         }
         return sentence.split('').some(this.isKanji);
     },
 
+    hasSpecialCharOrEng: function(sentence){
+        if(typeof sentence !== 'string'){
+            return;
+        }
+        const specialCharEngRegex = /[A-Za-z\][,!@#$%^&*() \]\u3000-\u303f\uff00-\uff65\uffa0-\uffef]/;
+        return sentence.match(specialCharEngRegex) !== null;
+    },
+
+    hasJapanese(sentence){
+        if(typeof sentence !== 'string'){
+            return;
+        }
+        return sentence.split('').some(this.isJapanese);
+    },
+
     toHiragana: function(sentence){
         if(typeof sentence !== 'string'){
-            console.error("invalid params: sentence must be string");
             return;
         }
         

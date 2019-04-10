@@ -52,9 +52,7 @@ export default {
     },
 
     hasSpecialChar: function() {
-      const englishAndSpecialChars = /[\(\)A-Za-z .?!'"？！―　“”「」…─0-9]/;
-      const result = this.wordObj.sf.match(englishAndSpecialChars);
-      return result !== null;
+      return jpUtils.hasSpecialCharOrEng(this.wordObj.sf);
     },
 
     selectWord: function() {
