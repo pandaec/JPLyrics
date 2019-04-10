@@ -21,7 +21,7 @@
 <script>
 import jpUtils from "@/logic/jpUtils";
 export default {
-  name: "LyricsViewer",
+  name: "Word",
   props: {
     wordObj: {
       sf: String,
