@@ -1,5 +1,5 @@
 <template>
-  <div class="frontpage-form content">
+  <div class="frontpage-form">
     <form>
       <fieldset>
         <input type="text" name="q" v-model="q">

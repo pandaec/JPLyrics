@@ -1,26 +1,30 @@
 <template>
   <div class="container">
-    <div class="lyrics-info">
-      <h3>{{lyricsData.title}}</h3>
-      <h4>{{lyricsData.artist}}</h4>
-      <LyricsViewerReadingToggleBtn @updateReadingMode="updateReadingMode"/>
-    </div>
+    <LoadingBox v-if="loading"/>
+    <div v-else>
+      <div class="lyrics-info">
+        <h3>{{lyricsData.title}}</h3>
+        <h4>{{lyricsData.artist}}</h4>
+        <LyricsViewerReadingToggleBtn @updateReadingMode="updateReadingMode"/>
+      </div>
 
-    <div class="line" v-for="(line, index) in lyricsData.slyrics" v-bind:key="index">
-      <template v-for="(word, windex) in line">
-        <Word
-          :key="windex"
-          @selectWord="focusWord"
-          :wordObj="word"
-          :focus="word.focus"
-          :readingMode="readingMode"
-          :lineNum="index"
-        />
-      </template>
+      <div class="line" v-for="(line, index) in lyricsData.slyrics" v-bind:key="index">
+        <template v-for="(word, windex) in line">
+          <Word
+            :key="windex"
+            @selectWord="focusWord"
+            :wordObj="word"
+            :focus="word.focus"
+            :readingMode="readingMode"
+            :lineNum="index"
+          />
+        </template>
 
-      <br v-if="line.length === 0">
+        <br v-if="line.length === 0">
 
-      <DictPanel v-if="index === focusLine" :word="highlightWord" @removePanel="removePanel"/>
+        <DictPanel v-if="index === focusLine" :word="highlightWord" @removePanel="removePanel"/>
+      </div>
+
     </div>
   </div>
 </template>
@@ -29,13 +33,15 @@
 import DictPanel from "./DictPanel.vue";
 import Word from "./Word.vue";
 import LyricsViewerReadingToggleBtn from "./LyricsViewerReadingToggleBtn.vue";
+import LoadingBox from "./LoadingBox.vue";
 
 export default {
   name: "LyricsViewer",
   components: {
     DictPanel,
     Word,
-    LyricsViewerReadingToggleBtn
+    LyricsViewerReadingToggleBtn,
+    LoadingBox
   },
   props: {
     sid: String
@@ -50,6 +56,7 @@ export default {
       focusLine: undefined,
       highlightWord: "",
       readingMode: "hiragana",
+      loading: true,
     };
   },
   created() {
@@ -57,6 +64,7 @@ export default {
       .then(res => res.json())
       .then(result => {
         this.lyricsData = result;
+        this.loading = false;
       });
   },
   methods: {

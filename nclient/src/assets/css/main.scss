@@ -9,286 +9,307 @@ $g2Color: #a5be00;
 $textColor: #343330;
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    transition: 0.2s;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: 0.2s;
 }
 
 #app {
-    background: $bgColor;
-    color: $textColor;
-    font-size: medium;
-    font-family: "メイリオ", "ヒラギノ角ゴ Pro W3", "ＭＳ Ｐゴシック", sans-serif;
-    min-height: 100vh;
+  background: $bgColor;
+  color: $textColor;
+  font-size: medium;
+  font-family: "メイリオ", "ヒラギノ角ゴ Pro W3", "ＭＳ Ｐゴシック", sans-serif;
+  min-height: 100vh;
 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-
-    .container {
-        width: 800px;
-        margin: 0 auto;
-        background-color: $bgColor;
-
-        .line {
-            margin: 5px 0;
-        }
-
-        .word {
-            border-bottom: 1px dotted $textColor;
-            margin: 0 1px;
-            cursor: default;
-        }
-
-        .word:hover:not(.highlight) {
-            border-bottom: 1px solid $textColor;
-        }
-
-        .highlight {
-            border: 2px dashed $b1Color;
-        }
-
-        ul {
-            list-style-position: inside;
-            list-style-type: decimal;
-        }
-
-        .lineBlock {
-            display: block;
-            width: 100%;
-            border: 2px solid $b1Color;
-            background-color: $bgColor;
-        }
-
-        .dictContainer {
-            display: flex;
-            flex-direction: row;
-            color: $textColor;
-        }
-
-        .dictContent {
-            flex-grow: 1;
-            padding-left: 5px;
-
-        }
-
-        .dictPagingBtn {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            border: none;
-            background-color: $b2Color;
-            color: $bgColor;
-            padding: 0 10px;
-        }
-
-        .dictPaging {
-            background-color: $bgColor;
-            display: inline-block;
-        }
-
-        .arrow-up {
-            width: 0;
-            height: 0;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-
-            border-bottom: 5px solid $b1Color;
-            position: relative;
-        }
-    }
-
-    .lyrics-form {
-        label {
-            display: inline-block;
-            width: 90px;
-            text-align: right;
-            vertical-align: top;
-        }
-
-        input {
-            width: 250px;
-            padding: 3px 0;
-        }
-
-        textarea {
-            width: 350px;
-            height: 500px;
-        }
-
-        .input-field {
-            margin-bottom: 0.5em;
-        }
-
-        .button {
-            margin-left: 90px;
-
-            button {
-                padding: 5px 30px;
-            }
-        }
-    }
-}
-
-.center {
-    justify-content: center;
-}
-
-.sidebar {
-    background-color: $b2Color;
-    color: $bgColor;
-
-    .header {
-        background-color: $b1Color;
-    }
-
-    .nav-link{
-        cursor: pointer;
-    }
-
-    .nav-link:hover {
-        background-color: $b1Color;
-    }
-}
-
-.white-icon {
-    color: $bgColor;
-}
-
-.form-expand {
-    height: 300px;
-    overflow-y: scroll;
-    border-top: 3px solid;
-    border-bottom: 3px solid;
-
-}
-
-.search-result {
-    padding: 5px 0;
-}
-
-.search-result:nth-child(even) {
-    background-color: #fff;
-}
-
-.main-content {
-    flex: 1;
-    display: flex;
-
-    .content {
-        flex-grow: 1;
-    }
-
-}
-
-.frontpage-form {
+  .container {
+    width: 100vw;
+    max-width: 800px;
+    height: 100%;
+    margin: 0 auto;
+    background-color: $bgColor;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    fieldset {
-        width: 100%;
-        border: 0;
-
-        input {
-            width: 75vw;
-            height: 5vh;
-            max-height: 35px;
-            font-size: 15px;
-        }
-
+    .line {
+      margin: 5px 0;
     }
+
+    .word {
+      border-bottom: 1px dotted $textColor;
+      margin: 0 1px;
+      cursor: default;
+    }
+
+    .word:hover:not(.highlight) {
+      border-bottom: 1px solid $textColor;
+    }
+
+    .highlight {
+      border: 2px dashed $b1Color;
+    }
+
+    ul {
+      list-style-position: inside;
+      list-style-type: decimal;
+    }
+
+    .lineBlock {
+      display: block;
+      width: 100%;
+      border: 2px solid $b1Color;
+      background-color: $bgColor;
+    }
+
+    .dictContainer {
+      display: flex;
+      flex-direction: row;
+      color: $textColor;
+    }
+
+    .dictContent {
+      flex-grow: 1;
+      padding-left: 5px;
+    }
+
+    .dictPagingBtn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border: none;
+      background-color: $b2Color;
+      color: $bgColor;
+      padding: 0 10px;
+    }
+
+    .dictPaging {
+      background-color: $bgColor;
+      display: inline-block;
+    }
+
+    .arrow-up {
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+
+      border-bottom: 5px solid $b1Color;
+      position: relative;
+    }
+  }
+
+  .lyrics-form {
+    label {
+      display: inline-block;
+      width: 90px;
+      text-align: right;
+      vertical-align: top;
+    }
+
+    input {
+      width: 250px;
+      padding: 3px 0;
+    }
+
+    textarea {
+      width: 350px;
+      height: 500px;
+    }
+
+    .input-field {
+      margin-bottom: 0.5em;
+    }
+
+    .button {
+      margin-left: 90px;
+
+      button {
+        padding: 5px 30px;
+      }
+    }
+  }
+}
+
+.center {
+  justify-content: center;
+}
+
+.sidebar {
+  background-color: $b2Color;
+  color: $bgColor;
+
+  .header {
+    background-color: $b1Color;
+  }
+
+  .nav-link {
+    cursor: pointer;
+  }
+
+  .nav-link:hover {
+    background-color: $b1Color;
+  }
+}
+
+.white-icon {
+  color: $bgColor;
+}
+
+.form-expand {
+  height: 300px;
+  overflow-y: scroll;
+  border-top: 3px solid;
+  border-bottom: 3px solid;
+}
+
+.search-result {
+  padding: 5px 0;
+}
+
+.search-result:nth-child(even) {
+  background-color: #fff;
+}
+
+.content {
+  flex: 1;
+}
+
+.front-page-panel {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-result-panel {
+  width: 100vw;
+  max-width: 1024px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.frontpage-form {
+  width: 100%;
+  max-width: 1024px;
+  form,
+  fieldset {
+    width: 100%;
+    border: 0;
+  }
+  fieldset {
+    display: flex;
+
+    input {
+      flex: 1;
+      height: 5vh;
+      max-height: 35px;
+      font-size: 15px;
+    }
+  }
 }
 
 .pbutton {
-    height: 5vh;
-    max-height: 35px;
+  height: 5vh;
+  max-height: 35px;
 
-    font-size: 15px;
+  font-size: 15px;
 
-    border: none;
-    padding: 3px 7px;
+  border: none;
+  padding: 3px 7px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .pbutton-primary {
-    background-color: $b1Color;
-    color: $bgColor;
+  background-color: $b1Color;
+  color: $bgColor;
 }
 
 .pbutton-success {
-    background-color: $g1Color;
+  background-color: $g1Color;
 }
 
 .pform {
-    label {
-        display: inline-block;
-        min-width: 55px;
-        font-size: 13pt;
-        vertical-align: top;
-    }
+  label {
+    display: inline-block;
+    min-width: 55px;
+    font-size: 13pt;
+    vertical-align: top;
+  }
 
-    input,
-    textarea {
-        font-size: 12pt;
-        width: 270px;
-        padding: 5px;
-        margin-right: 5px;
-    }
+  input,
+  textarea {
+    font-size: 12pt;
+    width: 270px;
+    padding: 5px;
+    margin-right: 5px;
+  }
 
-    textarea {
-        width: 350px;
-    }
+  textarea {
+    width: 350px;
+  }
 
-    .form-row {
-        margin: 5px 0;
-    }
+  .form-row {
+    margin: 5px 0;
+  }
 }
 
 label.pinput {
-    display: inline-block;
-    padding: 0.2em 0.3em;
-    margin: 0.2em;
-    cursor: pointer;
-    color: $bgColor;
-    background: $g2Color;
-    font-weight: bold;
+  display: inline-block;
+  padding: 0.2em 0.3em;
+  margin: 0.2em;
+  cursor: pointer;
+  color: $bgColor;
+  background: $g2Color;
+  font-weight: bold;
 
-    transition: 0.3s;
-    user-select: none;
+  transition: 0.3s;
+  user-select: none;
 }
 
-input:checked + label.pinput{
-    background-color: $g1Color;
-    color: $bgColor;
+input:checked + label.pinput {
+  background-color: $g1Color;
+  color: $bgColor;
 }
-
-
 
 .result-item:nth-child(odd) {
-    background-color: $bgColor;
+  background-color: $bgColor;
 }
 
 .result-item {
-    background-color: #fff;
-    cursor: pointer;
+  background-color: #fff;
+  cursor: pointer;
 }
 
 .lyrics-info {
-    margin-left: 3px;
+  margin-left: 3px;
 }
 
 rt {
-    font-size: 12px;
+  font-size: 12px;
 }
 
 rb {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .hidden {
-    display: none;
+  display: none;
+}
+
+.center-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-fill {
+  flex: 1;
 }

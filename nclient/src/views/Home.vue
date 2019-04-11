@@ -1,5 +1,7 @@
 <template>
-  <SearchPanel />
+  <div class="front-page-panel">
+    <SearchPanel />
+  </div>
 </template>
 
 <script>
