@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <LoadingBox v-if="loading"/>
-    <div v-else>
+    <div v-else class="lyrics-view-panel" >
       <div class="lyrics-info">
         <h3>{{lyricsData.title}}</h3>
         <h4>{{lyricsData.artist}}</h4>
