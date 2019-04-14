@@ -1,34 +1,28 @@
 // utf-8 reference
 // http://www.rikai.com/library/kanjitables/kanji_codes.unicode.shtml
 const jpUtils = {
-    isKanji: function(ch){
-        return (ch >= "\u4e00" && ch <= "\u9faf") || (ch >= "\u3400" && ch <= "\u4dbf");
-    },
-
-    isHiragana: function(ch){
-        return (ch >= "\u3040" && ch <= "\u309f");
-    },
-
-    isKatakana: function(ch){
-        return (ch >= "\u30a0" && ch <= "\u30ff");
-    },
-
-    isJapanese: function(ch){
-        return this.isHiragana(ch) || this.isKatakana(ch) || this.isKanji(ch);
-    },
-
     hasHiragana: function(sentence){
         if(typeof sentence !== 'string'){
             return;
         }
-        return sentence.split('').some(this.isHiragana);
+        const hiraganaregex = /[\u3040-\u309f]/;
+        return sentence.match(hiraganaregex) !== null;
+    },
+
+    hasKatakana: function(sentence){
+        if(typeof sentence !== 'string'){
+            return;
+        }
+        const hiraganaregex = /[\u30a0-\u30ff]/;
+        return sentence.match(hiraganaregex) !== null;
     },
 
     hasKanji: function(sentence){
         if(typeof sentence !== 'string'){
             return;
         }
-        return sentence.split('').some(this.isKanji);
+        const kanjiRegex = /[\u4e00-\u9faf\u3400-\u4dbf]/;
+        return sentence.match(kanjiRegex) !== null;
     },
 
     hasSpecialCharOrEng: function(sentence){
@@ -39,13 +33,6 @@ const jpUtils = {
         return sentence.match(specialCharEngRegex) !== null;
     },
 
-    hasJapanese(sentence){
-        if(typeof sentence !== 'string'){
-            return;
-        }
-        return sentence.split('').some(this.isJapanese);
-    },
-
     toHiragana: function(sentence){
         if(typeof sentence !== 'string'){
             return;
@@ -54,7 +41,7 @@ const jpUtils = {
         const OFFSET = 96;
         let result = [];
         for(let c of sentence){
-            if(this.isKatakana(c)){
+            if(this.hasKatakana(c)){
                 let charCode = c.charCodeAt(0);
                 result.push(String.fromCharCode(charCode - OFFSET));
             }else{
@@ -73,7 +60,7 @@ const jpUtils = {
         const OFFSET = 96;
         let result = [];
         for(let c of sentence){
-            if(this.isHiragana(c)){
+            if(this.hasHiragana(c)){
                 let charCode = c.charCodeAt(0);
                 result.push(String.fromCharCode(charCode + OFFSET));
             }else{
