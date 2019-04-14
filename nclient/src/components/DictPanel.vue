@@ -1,6 +1,6 @@
 <template>
   <div class="dictBlock">
-    <div class="arrow-up" :style="{left: arrowLeft+'px'}"></div>
+    <div class="arrow-up" :class="{'opacity-0': loadingDef,}" :style="{left: arrowLeft+'px'}"></div>
     <div class="lineBlock">
       <!-- <div class="dictBar" @click="removePanel">
         <i class="fas fa-window-close"></i>
@@ -36,7 +36,7 @@
 export default {
   name: "DictPanel",
   props: {
-    word: String,
+    word: String
   },
   data: function() {
     return {
@@ -59,6 +59,7 @@ export default {
         }
       ],
       wordIndex: 0,
+      loadingDef: true,
       tx: 0,
       ty: 0,
       orix: 0,
@@ -80,7 +81,7 @@ export default {
       const highlight = document.querySelector(".highlight");
       const dictBlock = this.$el;
 
-      if (highlight == undefined || dictBlock == undefined) return 9999999;
+      if (highlight == undefined || dictBlock == undefined) return 0;
 
       const highlightRect = highlight.getBoundingClientRect();
       const dictBlkRect = dictBlock.getBoundingClientRect();
@@ -97,6 +98,7 @@ export default {
       this.$emit("removePanel");
     },
     searchWord() {
+      this.loadingDef = true;
       fetch(`${process.env.VUE_APP_DB_IP}/api/jisho?keyword=${this.word}`)
         .then(res => res.json())
         .then(this.searchWordHandle)
@@ -105,6 +107,7 @@ export default {
     searchWordHandle(res) {
       this.meanings = res;
       this.arrowLeft = this.calcArrowOffset();
+      this.loadingDef = false;
       this.wordIndex = 0;
     },
 
@@ -152,7 +155,7 @@ export default {
         // left
         this.updateWordIndex(1);
       }
-    },
+    }
   }
 };
 </script>
