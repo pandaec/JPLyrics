@@ -4,7 +4,8 @@
       <fieldset>
         <input type="text" name="q" v-model="q">
         <button class="pbutton pbutton-primary" type="submit" @click.stop.prevent="submit()">
-          <i class="fas fa-search"></i> Search
+          <i class="fas fa-search"></i> 
+          Search
         </button>
       </fieldset>
     </form>

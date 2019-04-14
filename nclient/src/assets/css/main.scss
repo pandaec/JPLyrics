@@ -135,10 +135,6 @@ $textColor: #343330;
   }
 }
 
-.center {
-  justify-content: center;
-}
-
 .sidebar {
   background-color: $b2Color;
   color: $bgColor;
@@ -163,8 +159,8 @@ $textColor: #343330;
 .form-expand {
   height: 300px;
   overflow-y: scroll;
-  border-top: 3px solid;
-  border-bottom: 3px solid;
+  border-top: 3px solid $b2Color;
+  border-bottom: 3px solid $b2Color;
 }
 
 .search-result {
@@ -194,40 +190,33 @@ $textColor: #343330;
   display: flex;
   flex-direction: column;
 }
+form,
+fieldset {
+  border: 0;
+}
 
 .frontpage-form {
   width: 100%;
   max-width: 1024px;
-  form,
-  fieldset {
-    width: 100%;
-    border: 0;
-  }
   fieldset {
     display: flex;
 
     input {
       flex: 1;
-      height: 5vh;
-      max-height: 35px;
-      font-size: 15px;
+      height: 35px;
+      font-size: 18px;
     }
   }
 }
 
-.lyrics-view-panel{
+.lyrics-view-panel {
   width: 100%;
-} 
+}
 
 .pbutton {
-  height: 5vh;
-  max-height: 35px;
-
   font-size: 15px;
-
   border: none;
   padding: 3px 7px;
-
   cursor: pointer;
 }
 
@@ -238,26 +227,24 @@ $textColor: #343330;
 
 .pbutton-success {
   background-color: $g1Color;
+  color: $bgColor;
 }
 
 .pform {
   label {
-    display: inline-block;
+    display: block;
     min-width: 55px;
     font-size: 13pt;
-    vertical-align: top;
   }
 
   input,
   textarea {
     font-size: 12pt;
-    width: 270px;
+    width: 90vw;
+    max-width: 850px;
     padding: 5px;
     margin-right: 5px;
-  }
-
-  textarea {
-    width: 350px;
+    border: 0;
   }
 
   .form-row {
@@ -304,8 +291,16 @@ rb {
   font-size: 16px;
 }
 
+input[type="text"] {
+  border: none;
+}
+
 .hidden {
   display: none;
+}
+
+.flex {
+  display: flex;
 }
 
 .center-flex {
