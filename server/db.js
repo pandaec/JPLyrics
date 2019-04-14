@@ -97,7 +97,7 @@ var DB = /** @class */ (function () {
             var res;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.query('SELECT * FROM lyrics WHERE title LIKE $1 ORDER BY sid DESC', ["%" + title + "%"])];
+                    case 0: return [4 /*yield*/, this.query('SELECT * FROM lyrics WHERE lower(title) LIKE lower($1) ORDER BY sid DESC', ["%" + title + "%"])];
                     case 1:
                         res = _a.sent();
                         if (res.err) {

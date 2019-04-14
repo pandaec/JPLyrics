@@ -49,7 +49,7 @@ export class DB {
     }
 
     public async selectByTitle(title: string): Promise<ILyrics[]> {
-        const res = await this.query('SELECT * FROM lyrics WHERE title LIKE $1 ORDER BY sid DESC', [`%${title}%`]);
+        const res = await this.query('SELECT * FROM lyrics WHERE lower(title) LIKE lower($1) ORDER BY sid DESC', [`%${title}%`]);
         if ((<DBError>res).err) {
             throw <DBError>res;
         }
