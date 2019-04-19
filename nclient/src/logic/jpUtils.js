@@ -3,8 +3,9 @@
 const jpUtils = {
     hiraganaRegex: /[\u3040-\u309f]/,
     katakanaRegex: /[\u30a0-\u30ff]/,
-    hirakataRegex: /[\u3040-\u309f][\u30a0-\u30ff]/,
+    hirakataRegex: /[\u3040-\u309f\u30a0-\u30ff]/,
     kanjiRegex: /[\u4e00-\u9faf\u3400-\u4dbf]/,
+    japRegex: /[\u3040-\u309f\u30a0-\u30ff\u4e00-\u9faf\u3400-\u4dbf]/,
     specialCharEngRegex: /[A-Za-z\][,!@#$%^&*() \]\u3000-\u303f\uff00-\uff65\uffa0-\uffef]/,
     hasHiragana: function(sentence){
         if(typeof sentence !== 'string'){
@@ -32,6 +33,13 @@ const jpUtils = {
             return;
         }
         return sentence.match(this.specialCharEngRegex) !== null;
+    },
+
+    hasJapanese: function(sentence){
+        if(typeof sentence !== 'string'){
+            return;
+        }
+        return sentence.match(this.japRegex) !== null;
     },
 
     toHiragana: function(sentence){

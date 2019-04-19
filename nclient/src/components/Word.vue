@@ -53,7 +53,7 @@ export default {
     },
 
     hasSpecialChar: function() {
-      return jpUtils.hasSpecialCharOrEng(this.wordObj.sf);
+      return !jpUtils.hasJapanese(this.wordObj.sf);
     },
 
     selectWord: function() {
