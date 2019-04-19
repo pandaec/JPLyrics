@@ -1,36 +1,37 @@
 // utf-8 reference
 // http://www.rikai.com/library/kanjitables/kanji_codes.unicode.shtml
 const jpUtils = {
+    hiraganaRegex: /[\u3040-\u309f]/,
+    katakanaRegex: /[\u30a0-\u30ff]/,
+    hirakataRegex: /[\u3040-\u309f][\u30a0-\u30ff]/,
+    kanjiRegex: /[\u4e00-\u9faf\u3400-\u4dbf]/,
+    specialCharEngRegex: /[A-Za-z\][,!@#$%^&*() \]\u3000-\u303f\uff00-\uff65\uffa0-\uffef]/,
     hasHiragana: function(sentence){
         if(typeof sentence !== 'string'){
             return;
         }
-        const hiraganaregex = /[\u3040-\u309f]/;
-        return sentence.match(hiraganaregex) !== null;
+        return sentence.match(this.hiraganaRegex) !== null;
     },
 
     hasKatakana: function(sentence){
         if(typeof sentence !== 'string'){
             return;
         }
-        const hiraganaregex = /[\u30a0-\u30ff]/;
-        return sentence.match(hiraganaregex) !== null;
+        return sentence.match(this.katakanaRegex) !== null;
     },
 
     hasKanji: function(sentence){
         if(typeof sentence !== 'string'){
             return;
         }
-        const kanjiRegex = /[\u4e00-\u9faf\u3400-\u4dbf]/;
-        return sentence.match(kanjiRegex) !== null;
+        return sentence.match(this.kanjiRegex) !== null;
     },
 
     hasSpecialCharOrEng: function(sentence){
         if(typeof sentence !== 'string'){
             return;
         }
-        const specialCharEngRegex = /[A-Za-z\][,!@#$%^&*() \]\u3000-\u303f\uff00-\uff65\uffa0-\uffef]/;
-        return sentence.match(specialCharEngRegex) !== null;
+        return sentence.match(this.specialCharEngRegex) !== null;
     },
 
     toHiragana: function(sentence){
