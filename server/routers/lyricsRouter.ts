@@ -94,6 +94,7 @@ function tokenizeLine(tokenizer: kuromoji.Tokenizer<kuromoji.IpadicFeatures>, li
         return {
             'sf': w.surface_form,
             'rd': w.reading,
+            'pos': w.pos,
         }
     });
 }

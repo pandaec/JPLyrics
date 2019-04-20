@@ -14,7 +14,7 @@
     </template>
   </span>
   <span
-    v-else-if="!this.hasSpecialChar()"
+    v-else-if="!this.hasSpecialChar() && validPos()"
     class="word"
     :class="[{highlight: this.focus}]"
     @click="this.selectWord"
@@ -30,15 +30,15 @@ export default {
   props: {
     wordObj: {
       sf: String,
-      rd: String
+      rd: String,
+      pos: String
     },
     focus: Boolean,
     lineNum: Number,
     // hiragana, katakana, none
     readingMode: String
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     hasKanji: function() {
       return jpUtils.hasKanji(this.wordObj.sf);
@@ -64,6 +64,8 @@ export default {
     // will force all sf to hiragana
     // maybe can move to backend?
     tokenizeKanji: function() {
+      if(!this.wordObj.rd) return [this.wordObj.sf, ''];
+
       let hirakata = this.wordObj.sf
         .split(jpUtils.kanjiRegex)
         .filter(s => s !== "");
@@ -92,13 +94,22 @@ export default {
       return r;
     },
 
-    translateReading: function(str){
+    translateReading: function(str) {
       if (this.readingMode === "hiragana") {
         return this.toHiragana(str);
       } else {
         return this.toKatakana(str);
       }
     },
+
+    validPos: function(str) {
+      return (
+        this.wordObj.pos === "動詞" ||
+        this.wordObj.pos === "名詞" ||
+        this.wordObj.pos === "副詞" ||
+        this.wordObj.pos === "形容詞"
+      );
+    }
   }
 };
 </script>
