@@ -13,10 +13,11 @@
           <Word
             :key="windex"
             @selectWord="focusWord"
-            :wordObj="word"
+            :word="word"
             :focus="word.focus"
             :readingMode="readingMode"
             :lineNum="index"
+            :linePos="windex"
           />
         </template>
 
@@ -55,7 +56,7 @@ export default {
       },
       focusLine: undefined,
       highlightWord: "",
-      readingMode: "hiragana",
+      readingMode: "katakana",
       loading: true,
     };
   },
@@ -76,7 +77,7 @@ export default {
       });
 
       this.$set(word, "focus", true);
-      this.highlightWord = word.sf;
+      this.highlightWord = word.bf;
       this.focusLine = lineNum;
     },
     removePanel() {

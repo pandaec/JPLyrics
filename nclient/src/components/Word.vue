@@ -1,25 +1,21 @@
 <template>
   <span
     class="word"
-    v-if="this.hasKanji()"
+    v-if="!isSymbol && isValidPos"
+    @click="selectWord"
     :class="[{highlight: this.focus}]"
-    @click="this.selectWord"
   >
-    <template v-for="(token, index) in tokenizeKanji()">
-      <ruby v-if="Array.isArray(token)" :key="index">
-        <rb>{{token[0]}}</rb>
-        <rt :class="[{'hidden': readingMode === 'none'}]">{{translateReading(token[1])}}</rt>
-      </ruby>
-      <template v-else>{{token}}</template>
+    <template v-for="(token, index) in word.tokens">
+      <template v-if="token.rd">
+        <ruby :key="index">
+          <rb>{{token.sf}}</rb>
+          <rt :class="[{'hidden': readingMode === 'none'}]">{{translateReading(token.rd)}}</rt>
+        </ruby>
+      </template>
+      <template v-else>{{token.sf}}</template>
     </template>
   </span>
-  <span
-    v-else-if="!this.hasSpecialChar() && validPos()"
-    class="word"
-    :class="[{highlight: this.focus}]"
-    @click="this.selectWord"
-  >{{this.wordObj.sf}}</span>
-  <span v-else>{{this.wordObj.sf}}</span>
+  <span v-else>{{word.tokens[0].sf}}</span>
 </template>
 
 
@@ -28,17 +24,33 @@ import jpUtils from "@/logic/jpUtils";
 export default {
   name: "Word",
   props: {
-    wordObj: {
-      sf: String,
-      rd: String,
-      pos: String
+    word: {
+      bf: String,
+      pos: String,
+      tokens: [{ sf: String, bf: String }]
     },
     focus: Boolean,
     lineNum: Number,
+    linePos: Number,
     // hiragana, katakana, none
     readingMode: String
   },
-  computed: {},
+  computed: {
+    isSymbol: function() {
+      return (
+        this.word.tokens.length === 1 &&
+        !jpUtils.hasJapanese(this.word.tokens[0].sf)
+      );
+    },
+    isValidPos: function() {
+      return (
+        this.word.pos === "動詞" ||
+        this.word.pos === "名詞" ||
+        this.word.pos === "副詞" ||
+        this.word.pos === "形容詞"
+      );
+    }
+  },
   methods: {
     hasKanji: function() {
       return jpUtils.hasKanji(this.wordObj.sf);
@@ -57,41 +69,7 @@ export default {
     },
 
     selectWord: function() {
-      this.$emit("selectWord", this.wordObj, this.lineNum);
-    },
-
-    // assume kanji must be first letter
-    // will force all sf to hiragana
-    // maybe can move to backend?
-    tokenizeKanji: function() {
-      if(!this.wordObj.rd) return [this.wordObj.sf, ''];
-
-      let hirakata = this.wordObj.sf
-        .split(jpUtils.kanjiRegex)
-        .filter(s => s !== "");
-      let customRegex = `(.*)`;
-      for (let token of hirakata) {
-        customRegex += jpUtils.toHiragana(token) + `(.*)`;
-      }
-      const kanjiTokens = jpUtils
-        .toHiragana(this.wordObj.sf)
-        .match(customRegex)
-        .filter(s => s !== "")
-        .slice(1);
-      const readingTokens = jpUtils
-        .toHiragana(this.wordObj.rd)
-        .match(customRegex)
-        .filter(s => s !== "")
-        .slice(1);
-
-      let r = [];
-      for (let i = 0; i < kanjiTokens.length; i++) {
-        r.push([kanjiTokens[i], readingTokens[i]]);
-        if (hirakata[i]) {
-          r.push(hirakata[i]);
-        }
-      }
-      return r;
+      this.$emit("selectWord", this.word, this.lineNum, this.linePos);
     },
 
     translateReading: function(str) {
@@ -100,15 +78,6 @@ export default {
       } else {
         return this.toKatakana(str);
       }
-    },
-
-    validPos: function(str) {
-      return (
-        this.wordObj.pos === "動詞" ||
-        this.wordObj.pos === "名詞" ||
-        this.wordObj.pos === "副詞" ||
-        this.wordObj.pos === "形容詞"
-      );
     }
   }
 };

@@ -16,7 +16,7 @@ export default {
   name: "LyricsViewerReadingToggleBtn",
   data: function() {
     return {
-      picked: "hiragana"
+      picked: "katakana"
     };
   },
   watch: {
