@@ -1,3 +1,7 @@
+/server/**/*.js
+/server/**/*.js.map
+/nclient/dist
+
 # Logs
 logs
 *.log
