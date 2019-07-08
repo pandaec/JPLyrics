@@ -63,7 +63,7 @@ const JLyrics = {
 
     getOption: function (searchStr: string, pageNum: number): requestPromise.Options {
         return {
-            uri: `http://search2.j-lyric.net/index.php?p=${pageNum + 1}&ex=on&ct=2&ca=2&cl=2&kt=${searchStr}`,
+            uri: `http://search.j-lyric.net/index.php?p=${pageNum + 1}&ex=on&ct=2&ca=2&cl=2&kt=${searchStr}`,
             transform: (body: string) => cheerio.load(body)
         };
     },
