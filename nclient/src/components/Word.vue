@@ -1,8 +1,7 @@
 <template>
   <span
     class="word"
-    v-if="!isSymbol && isValidPos"
-    @click="selectWord"
+    v-if="this.hasKanji()"
     :class="[{highlight: this.focus}]"
   >
     <template v-for="(token, index) in word.tokens">
@@ -15,7 +14,13 @@
       <template v-else>{{token.sf}}</template>
     </template>
   </span>
-  <span v-else>{{word.tokens[0].sf}}</span>
+  <span
+    v-else-if="!this.hasSpecialChar()"
+    class="word"
+    :class="[{highlight: this.focus}]"
+    @click="this.selectWord"
+  >{{this.wordObj.sf}}</span>
+  <span v-else>{{this.wordObj.sf}}</span>
 </template>
 
 
@@ -24,10 +29,9 @@ import jpUtils from "@/logic/jpUtils";
 export default {
   name: "Word",
   props: {
-    word: {
-      bf: String,
-      pos: String,
-      tokens: [{ sf: String, bf: String }]
+    wordObj: {
+      sf: String,
+      rd: String
     },
     focus: Boolean,
     lineNum: Number,
@@ -36,20 +40,6 @@ export default {
     readingMode: String
   },
   computed: {
-    isSymbol: function() {
-      return (
-        this.word.tokens.length === 1 &&
-        !jpUtils.hasJapanese(this.word.tokens[0].sf)
-      );
-    },
-    isValidPos: function() {
-      return (
-        this.word.pos === "動詞" ||
-        this.word.pos === "名詞" ||
-        this.word.pos === "副詞" ||
-        this.word.pos === "形容詞"
-      );
-    }
   },
   methods: {
     hasKanji: function() {
@@ -69,16 +59,48 @@ export default {
     },
 
     selectWord: function() {
-      this.$emit("selectWord", this.word, this.lineNum, this.linePos);
+      this.$emit("selectWord", this.wordObj, this.lineNum);
     },
 
-    translateReading: function(str) {
+    // assume kanji must be first letter
+    // will force all sf to hiragana
+    // maybe can move to backend?
+    tokenizeKanji: function() {
+      let hirakata = this.wordObj.sf
+        .split(jpUtils.kanjiRegex)
+        .filter(s => s !== "");
+      let customRegex = `(.*)`;
+      for (let token of hirakata) {
+        customRegex += jpUtils.toHiragana(token) + `(.*)`;
+      }
+      const kanjiTokens = jpUtils
+        .toHiragana(this.wordObj.sf)
+        .match(customRegex)
+        .filter(s => s !== "")
+        .slice(1);
+      const readingTokens = jpUtils
+        .toHiragana(this.wordObj.rd)
+        .match(customRegex)
+        .filter(s => s !== "")
+        .slice(1);
+
+      let r = [];
+      for (let i = 0; i < kanjiTokens.length; i++) {
+        r.push([kanjiTokens[i], readingTokens[i]]);
+        if (hirakata[i]) {
+          r.push(hirakata[i]);
+        }
+      }
+      return r;
+    },
+
+    translateReading: function(str){
       if (this.readingMode === "hiragana") {
         return this.toHiragana(str);
       } else {
         return this.toKatakana(str);
       }
-    }
+    },
   }
 };
 </script>
